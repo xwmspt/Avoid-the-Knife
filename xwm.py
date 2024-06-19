@@ -37,7 +37,8 @@ knife_image = pygame.image.load("knife.png")
 knife_image = pygame.transform.scale(knife_image, (40, 40))  # Увеличиваем размер кинжалов
 
 # Загрузка музыки
-pygame.mixer.music.load("plenka-Nightmare.mp3")
+menu_music = "menu.mp3"
+game_music = "Little-girl.mp3"
 
 # Класс для кинжалов
 class Knife(pygame.sprite.Sprite):
@@ -97,6 +98,10 @@ game_over = False
 game_won = False
 game_start = True  # Добавляем флаг для начального экрана
 
+# Включаем музыку меню при запуске
+pygame.mixer.music.load(menu_music)
+pygame.mixer.music.play(-1)  # Начинаем проигрывание музыки в цикле
+
 def restart_game():
     global score, game_over, game_won
     score = 0
@@ -105,6 +110,7 @@ def restart_game():
     girl_sprite.rect.x = SCREEN_WIDTH // 2 - girl_sprite.image.get_width() // 2
     girl_sprite.rect.y = SCREEN_HEIGHT - girl_sprite.image.get_height()
     knife_group.empty()  # Очищаем группу кинжалов
+    pygame.mixer.music.load(game_music)  # Загружаем игровую музыку
     pygame.mixer.music.play(-1)  # Начинаем проигрывание музыки в цикле
 
 def draw_start_screen():
@@ -137,6 +143,7 @@ while running:
                 if SCREEN_WIDTH // 2 - 75 <= pygame.mouse.get_pos()[0] <= SCREEN_WIDTH // 2 + 75:
                     if SCREEN_HEIGHT // 2 <= pygame.mouse.get_pos()[1] <= SCREEN_HEIGHT // 2 + 50:
                         game_start = False  # Начинаем игру
+                        pygame.mixer.music.load(game_music)  # Загружаем игровую музыку
                         pygame.mixer.music.play(-1)  # Начинаем проигрывание музыки в цикле
                     elif SCREEN_HEIGHT // 2 + 100 <= pygame.mouse.get_pos()[1] <= SCREEN_HEIGHT // 2 + 150:
                         running = False  # Выход из игры
